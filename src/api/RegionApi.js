@@ -19,12 +19,21 @@ const deleted = async (id) => {
   }
 };
 
-const create = async(payload) => {
-    try {
-        const result = await axios.post(`${config.domain}/regions`,payload)
-        return result
-    } catch (error) {
-        return await error.message;
-    }
-}
-export default { list, deleted, create };
+const create = async (payload) => {
+  try {
+    const result = await axios.post(`${config.domain}/regions`, payload);
+    return result;
+  } catch (error) {
+    return await error.message;
+  }
+};
+
+const update = async (id, payload) => {
+  try {
+    const result = await axios.put(`${config.domain}/regions/${id}`, payload);
+    return result;
+  } catch (error) {
+    return await error.message;
+  }
+};
+export default { list, deleted, create, update };

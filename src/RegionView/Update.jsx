@@ -1,32 +1,35 @@
 import React, { useState } from "react";
 import RegionApi from "../api/RegionApi";
 
-export default function RegionCreate(props) {
-  const [value, setValue] = useState({
-    name: undefined,
-  });
-  const handleChange = (name) => (event) => {
-    setValue({ ...value, [name]: event.target.value });
-  };
+export default function Update(props) {
+  let regionId = props.regionId;
+  let regionName = props.regionName;
+
+  const [regionNameUpdated, setRegionNameUpdated] = useState("");
+
   const onSubmit = async () => {
     const payload = {
-      name: value.name,
+      name: regionNameUpdated,
     };
-    await RegionApi.create(payload).then(() => {
+    await RegionApi.update(regionId, payload).then(() => {
       props.setRefresh(true);
-      window.alert("Data success Create");
+      window.alert("Data has been updated");
     });
   };
+  const handleChange = (name) => {
+    setRegionNameUpdated(name);
+  };
+
   return (
     <div>
-      <h2>Add Regions</h2>
+      <h2>Update Regions</h2>
       <form onSubmit={onSubmit}>
         <div>
           <label>Region Name :</label>
           <input
             type="text"
-            placeholder="Name"
-            onChange={handleChange("name")}
+            placeholder={regionName}
+            onChange={(e) => handleChange(e.target.value)}
           ></input>
         </div>
         <div>
